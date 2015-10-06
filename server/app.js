@@ -38,19 +38,21 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 // *** config middleware *** //
+app.use(express.static(path.join(__dirname, '../client')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../client/public')));
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname,'../client/views','index.html'));
-});
-app.use(session(
-  { secret: 'keyboard cat', resave: true, saveUninitialized: true })
-);
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 // *** main routes *** //
 // app.use('/', routes);
