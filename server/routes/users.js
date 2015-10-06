@@ -41,7 +41,6 @@ router.post('/users',function(req,res,next){
 });
 
 // PUT/UPDATE SINGLE USER
-// put a beer
 router.put('/user/:id', function(req, res, next) {
   var update = {
     username:req.body.username,

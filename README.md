@@ -4,7 +4,7 @@ An app to help a user find some fun things to do.
 
 - tweet where you're going tonight.
 
-- use "bands in town API to get music events based on location.
+- use "bands in town" API to get music events based on location.
 
 -
 
