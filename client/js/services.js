@@ -1,4 +1,5 @@
-angular.module('myApp').factory('AuthService',
+
+app.factory('AuthService',
   ['$q', '$timeout', '$http',
   function ($q, $timeout, $http) {
 
@@ -99,7 +100,5 @@ angular.module('myApp').factory('AuthService',
 
       // return promise object
       return deferred.promise;
-
     }
-
 }]);

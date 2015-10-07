@@ -1,8 +1,11 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var app = angular.module('myApp', ['ngRoute','ngResource']);
 
-myApp.config(function ($routeProvider) {
+app.config(function ($routeProvider) {
   $routeProvider
-    .when('/', {templateUrl: 'partials/home.html'})
+    .when('/home', {
+      templateUrl: 'partials/home.html',
+      access: {restricted: false}
+    })
     .when('/login', {
       templateUrl: 'partials/login.html',
       controller: 'loginController',
@@ -25,12 +28,17 @@ myApp.config(function ($routeProvider) {
       template: '<h1>This is page two!</h1>',
       access: {restricted: false}
     })
+     .when('/events', {
+      controller: 'EventsController',
+      templateUrl: 'partials/events.html',
+      access: {restricted: false}
+    })
     .otherwise({redirectTo: '/'});
 });
 
-myApp.run(function ($rootScope, $location, $route, AuthService) {
+app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    console.log(next);
+    console.log(next.access);
     if (next.access.restricted && AuthService.isLoggedIn() === false) {
       $location.path('/login');
     }

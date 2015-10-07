@@ -1,0 +1,13 @@
+<div class="col-md-4">
+  <h1>Look for Events</h2>
+  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+  <form ng-controller="EventsController" class="form">
+    <div class="form-group">
+      <label>Search in your area</label>
+      <input type="text" class="form-control" name="location" ng-model="city" required>
+    </div>
+      <div>
+        <button ng-click='getYelp()' type="submit" class="btn btn-default" ng-disabled="disabled">Submit</button>
+      </div>
+  </form>
+</div>

@@ -1,4 +1,4 @@
-angular.module('myApp').controller('loginController', ['$scope', '$location', 'AuthService',
+app.controller('loginController', ['$scope', '$location', 'AuthService',
   function($scope, $location, AuthService) {
 
     console.log(AuthService.getUserStatus());
@@ -30,7 +30,7 @@ angular.module('myApp').controller('loginController', ['$scope', '$location', 'A
   }
 ]);
 
-angular.module('myApp').controller('logoutController', ['$scope', '$location', 'AuthService',
+app.controller('logoutController', ['$scope', '$location', 'AuthService',
   function($scope, $location, AuthService) {
 
     $scope.logout = function() {
@@ -48,7 +48,7 @@ angular.module('myApp').controller('logoutController', ['$scope', '$location', '
   }
 ]);
 
-angular.module('myApp').controller('registerController', ['$scope', '$location', 'AuthService',
+app.controller('registerController', ['$scope', '$location', 'AuthService',
   function($scope, $location, AuthService) {
 
     console.log(AuthService.getUserStatus());
@@ -77,5 +77,19 @@ angular.module('myApp').controller('registerController', ['$scope', '$location',
 
     };
 
+  }
+]);
+
+app.controller('EventsController', ['$scope',
+  '$http',
+  function($scope, $http) {
+
+    $scope.getYelp = function() {
+      var url = 'yelp/events/bar/'+ $scope.city;
+      $http.get(url).then(function(data) {
+        console.log(data);
+
+      });
+    };
   }
 ]);

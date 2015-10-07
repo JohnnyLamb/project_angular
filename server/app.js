@@ -1,6 +1,7 @@
  // *** main dependencies *** //
 var express = require('express');
 var path = require('path');
+var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -9,11 +10,11 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-
 // *** routes *** //
 var routes = require('./routes/index.js');
 var userRoutes = require('./routes/users.js');
 var register = require('./routes/register.js');
+var yelp = require('./routes/yelp.js');
 
 
 // *** express instance *** //
@@ -53,16 +54,16 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-// *** main routes *** //
-// app.use('/', routes);
-app.use('/api/', userRoutes);
-app.use('/user/', register);
-
 var User = require('./models/users');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// *** main routes *** //
+// app.use('/', routes);
+// app.use('/api/', userRoutes);
+app.use('/user/', register);
+app.use('/yelp/', yelp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -70,10 +71,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-
 // *** error handlers *** //
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -85,7 +83,6 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -95,6 +92,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
