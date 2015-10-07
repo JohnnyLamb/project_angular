@@ -16,6 +16,7 @@ router.get('/events/:term/:location', function(req, res, next) {
   var location = req.params.location;
   yelp.search({
     term: term,
+    limit: 3,
     location: location
   }, function(error, data) {
     if(error){
