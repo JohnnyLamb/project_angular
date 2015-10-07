@@ -6,8 +6,31 @@
       <label>Search in your area</label>
       <input type="text" class="form-control" name="location" ng-model="city" required>
     </div>
+    <div class="form-group">
+      <label>What are you looking for</label>
+      <input type="text" class="form-control" name="term" ng-model="term" required>
+    </div>
       <div>
         <button ng-click='getYelp()' type="submit" class="btn btn-default" ng-disabled="disabled">Submit</button>
       </div>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody id="all-events">
+       <tr ng-repeat='event in events'>
+          <td>{{event.name}}</td>
+          <!-- <td>{{event.location}}</td> -->
+
+          <td class='text-right'>
+            <button ng-click="editBeer(event._id)" class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span></button>
+            <button ng-click="deleteBeer(event._id)" class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span></button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
   </form>
 </div>

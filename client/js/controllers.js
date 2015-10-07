@@ -85,9 +85,10 @@ app.controller('EventsController', ['$scope',
   function($scope, $http) {
 
     $scope.getYelp = function() {
-      var url = 'yelp/events/bar/'+ $scope.city;
+
+      var url = 'yelp/events/' + $scope.term + '/' + $scope.city;
       $http.get(url).then(function(data) {
-        console.log(data);
+        $scope.events = data.data;
 
       });
     };
