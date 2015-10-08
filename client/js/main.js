@@ -20,6 +20,11 @@ app.config(function ($routeProvider) {
       controller: 'registerController',
       access: {restricted: false}
     })
+     .when('/events', {
+      controller: 'EventsController',
+      templateUrl: 'partials/events.html',
+      access: {restricted: false}
+    })
     .when('/one', {
       template: '<h1>This is page one!</h1>',
       access: {restricted: true}
@@ -28,17 +33,11 @@ app.config(function ($routeProvider) {
       template: '<h1>This is page two!</h1>',
       access: {restricted: false}
     })
-     .when('/events', {
-      controller: 'EventsController',
-      templateUrl: 'partials/events.html',
-      access: {restricted: false}
-    })
-    .otherwise({redirectTo: '/'});
+    .otherwise({redirectTo: '/home'});
 });
 
 app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    console.log(next.access);
     if (next.access.restricted && AuthService.isLoggedIn() === false) {
       $location.path('/login');
     }

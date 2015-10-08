@@ -63,7 +63,7 @@ passport.deserializeUser(User.deserializeUser());
 // app.use('/', routes);
 // app.use('/api/', userRoutes);
 app.use('/user/', register);
-app.use('/yelp/', yelp);
+app.use('/yelp/user', yelp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

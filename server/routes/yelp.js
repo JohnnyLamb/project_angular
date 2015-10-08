@@ -16,17 +16,32 @@ router.get('/events/:term/:location', function(req, res, next) {
   var location = req.params.location;
   yelp.search({
     term: term,
-    limit: 3,
+    limit: 20,
     location: location
   }, function(error, data) {
     if(error){
       res.json({'message':error});
     } else{
        console.log(data);
-      res.json(data["businesses"]);
+      res.json(data.businesses);
     }
   });
 });
+
+// // PUT/UPDATE SINGLE Event
+// router.put('/events/:term/:location', function(req, res, next) {
+//   var event = {
+//     event:req.body.event,
+
+//   };
+//   User.findByIdAndUpdate(req.params.id, event, function(err, data){
+//     if(err){
+//       res.json({'message': err});
+//     } else {
+//       res.json(data);
+//     }
+//   });
+// });
 
 
 module.exports = router;

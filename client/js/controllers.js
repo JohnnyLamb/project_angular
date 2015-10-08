@@ -13,7 +13,7 @@ app.controller('loginController', ['$scope', '$location', 'AuthService',
       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
         // handle success
         .then(function() {
-          $location.path('/');
+          $location.path('/events');
           $scope.disabled = false;
           $scope.loginForm = {};
         })
@@ -42,9 +42,7 @@ app.controller('logoutController', ['$scope', '$location', 'AuthService',
         .then(function() {
           $location.path('/login');
         });
-
     };
-
   }
 ]);
 
@@ -63,7 +61,7 @@ app.controller('registerController', ['$scope', '$location', 'AuthService',
       AuthService.register($scope.registerForm.username, $scope.registerForm.password)
         // handle success
         .then(function() {
-          $location.path('/login');
+          $location.path('/events');
           $scope.disabled = false;
           $scope.registerForm = {};
         })
@@ -74,23 +72,37 @@ app.controller('registerController', ['$scope', '$location', 'AuthService',
           $scope.disabled = false;
           $scope.registerForm = {};
         });
-
     };
-
   }
 ]);
 
 app.controller('EventsController', ['$scope',
   '$http',
   function($scope, $http) {
-
     $scope.getYelp = function() {
+      if ($scope.city !== undefined && $scope.term !== undefined) {
+        $scope.error = null;
+        var url = 'yelp/user/events/' + $scope.term + '/' + $scope.city;
+        $http.get(url).then(function(data) {
+          $scope.events = data.data;
+        });
+      } else {
+        $scope.error = "Please fill in the search fields";
+      }
+      $scope.city = undefined;
+      $scope.term = undefined;
+    };
 
-      var url = 'yelp/events/' + $scope.term + '/' + $scope.city;
-      $http.get(url).then(function(data) {
-        $scope.events = data.data;
+  }
+]);
+
+app.controller('AddEventsController', ['$scope', '$http',
+  function($scope, $http) {
+    $scope.addEvent = function(id) {
+      $http.post('yelp/user/events/' + id).then(function(data) {
 
       });
     };
   }
+
 ]);

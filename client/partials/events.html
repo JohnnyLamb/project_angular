@@ -1,33 +1,45 @@
 <div class="col-md-4">
-  <h1>Look for Events</h2>
+  <h1>Plan Your Night</h2>
   <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
   <form ng-controller="EventsController" class="form">
     <div class="form-group">
       <label>Search in your area</label>
-      <input type="text" class="form-control" name="location" ng-model="city" required>
+      <input type="text" class="form-control" name="location" ng-model="city">
     </div>
     <div class="form-group">
       <label>What are you looking for</label>
-      <input type="text" class="form-control" name="term" ng-model="term" required>
+      <input type="text" class="form-control" name="term" ng-model="term">
     </div>
+    <div>
+       <h3>{{error}}</h3>
+      </div>
       <div>
         <button ng-click='getYelp()' type="submit" class="btn btn-default" ng-disabled="disabled">Submit</button>
       </div>
-      <table class="table">
+      <table class="table table-striped">
       <thead>
         <tr>
           <th>Name</th>
-          <th>Type</th>
+          <th>Address</th>
+          <th>Rating</th>
+          <th>Reviews</th>
+          <th>Phone</th>
         </tr>
       </thead>
       <tbody id="all-events">
        <tr ng-repeat='event in events'>
-          <td>{{event.name}}</td>
-          <!-- <td>{{event.location}}</td> -->
+        <td>{{event.name}}</td>
 
-          <td class='text-right'>
-            <button ng-click="editBeer(event._id)" class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span></button>
-            <button ng-click="deleteBeer(event._id)" class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span></button>
+        <td>{{event.location.display_address[0] +" "+ event.location.display_address[1]}}</td>
+
+        <td><img ng-src='{{event.rating_img_url}}'/></td>
+
+        <td>{{event.review_count}}</td>
+
+        <td>{{event.phone}}</td>
+
+        <td class='text-right'>
+          <button ng-click="addEvent(event._id)" class='btn btn-primary'><span class='glyphicon glyphicon-plus'>Add</span></button>
             </td>
         </tr>
       </tbody>
