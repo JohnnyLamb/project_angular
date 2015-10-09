@@ -4,6 +4,7 @@ var passport = require('passport');
 var User = require('../models/users.js');
 
 router.get('/:username', function(req, res, next) {
+  console.log(req.session)
   User.findOne({username:req.params.username}, function(err, data){
     if(err){
       res.json({'message': err});
@@ -61,6 +62,7 @@ router.post('/login', function(req, res, next) {
           err: 'Could not log in user'
         });
       }
+      req.session.user = user;
       res.status(200).json({
         status: 'Login successful!',
         user: user

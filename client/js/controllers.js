@@ -81,6 +81,7 @@ app.controller('registerController', ['$scope', '$location', 'AuthService',
 app.controller('EventsController', ['$scope',
   '$http',
   function($scope, $http) {
+    $scope.events = {};
     $scope.getYelp = function() {
       if ($scope.city !== undefined && $scope.term !== undefined) {
         $scope.error = null;
@@ -94,25 +95,13 @@ app.controller('EventsController', ['$scope',
       $scope.city = undefined;
       $scope.term = undefined;
     };
+    $scope.addEvent = function(data) {
+      $http.post('/yelp/user/addEvent', data).then(function(data) {
+        //fix our scope to change the addedEvent so we can't add it more times.
 
-  }
-]);
+      });
 
 
-
-app.controller('AddEventsController', ['$scope', '$http',
-
-  function(payload,$http,$scope) {
-    // $scope.events = {};
-    // $http.post('user/:username/event',payload).then(function(response) {
-    //   console.log(response.data);
-    // });
-    $scope.addEvent = function($scope) {
-      var payload = {
-        'event': $scope.event,
-      };
-      // postData(payload);
-      console.log(payload);
     };
   }
 ]);

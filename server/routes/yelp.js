@@ -10,7 +10,7 @@ var yelp = require("yelp").createClient({
   token_secret: "zdQXksdnuzuB4yCZXBgwrn5psDs"
 });
 
-// GET ALL USERS
+// GET ALL Events
 router.get('/events/:term/:location', function(req, res, next) {
   var term = req.params.term;
   var location = req.params.location;
@@ -22,11 +22,39 @@ router.get('/events/:term/:location', function(req, res, next) {
     if(error){
       res.json({'message':error});
     } else{
-       console.log(data);
+
       res.json(data.businesses);
     }
   });
 });
+
+// GET SINGLE EVENT
+router.get('/events/:id', function(req, res, next) {
+  User.findById(req.params.id, function(err, data){
+    if(err){
+      res.json({'message': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+router.post('/addEvent', function(req, res, next) {
+  User.findById(req.session.user._id, function (err, user) {
+    if(!err){
+      user.events.push(req.body);
+      user.save(function(err,data){
+         if(err){
+           res.json({'message':err});
+         } else{
+           res.json(data);
+         }
+       });
+     }
+  });
+
+});
+
 
 // // PUT/UPDATE SINGLE Event
 // router.put('/events/:term/:location', function(req, res, next) {

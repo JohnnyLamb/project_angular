@@ -1,4 +1,4 @@
-<div ng-controller='AddEventsController' class="col-md-4">
+<div class="col-md-4">
   <h1>Plan Your Night {{user}}</h2>
   <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
   <form class="form">
@@ -24,7 +24,7 @@
           <th>Rating</th>
           <th>Reviews</th>
           <th>Phone</th>
-          <th>website</th>
+          <th>Website</th>
         </tr>
       </thead>
       <tbody id="all-events">
@@ -39,10 +39,10 @@
 
         <td>{{event.phone}}</td>
 
-        <td><a ng-href='{{event.url}}'>{{event.url}}</td>
+        <td><a target='_blank' ng-href='{{event.url}}'>{{event.url}}</td>
 
         <td class='text-right'>
-          <button ng-model='event'ng-click="addEvent()" class='btn btn-primary'><span class='glyphicon glyphicon-plus'>Add</span></button>
+          <button ng-model='event'ng-click="addEvent(event)" class='btn btn-primary'><span class='glyphicon glyphicon-plus'>Add</span></button>
             </td>
         </tr>
       </tbody>
