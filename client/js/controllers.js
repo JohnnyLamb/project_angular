@@ -1,7 +1,5 @@
-app.controller('loginController', ['$scope', '$location', 'AuthService',
-  function($scope, $location, AuthService) {
-
-    console.log(AuthService.getUserStatus());
+app.controller('loginController', ['$rootScope', '$scope', '$location', 'AuthService',
+  function($rootScope, $scope, $location, AuthService) {
 
     $scope.login = function() {
 
@@ -12,10 +10,14 @@ app.controller('loginController', ['$scope', '$location', 'AuthService',
       // call login from service
       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
         // handle success
-        .then(function() {
+        .then(function(data) {
           $location.path('/events');
           $scope.disabled = false;
+          console.log(data);
+          $rootScope.user = data.user.username;
+          console.log($rootScope);
           $scope.loginForm = {};
+
         })
         // handle error
         .catch(function() {
@@ -96,13 +98,21 @@ app.controller('EventsController', ['$scope',
   }
 ]);
 
-app.controller('AddEventsController', ['$scope', '$http',
-  function($scope, $http) {
-    $scope.addEvent = function(id) {
-      $http.post('yelp/user/events/' + id).then(function(data) {
 
-      });
+
+app.controller('AddEventsController', ['$scope', '$http',
+
+  function(payload,$http,$scope) {
+    // $scope.events = {};
+    // $http.post('user/:username/event',payload).then(function(response) {
+    //   console.log(response.data);
+    // });
+    $scope.addEvent = function($scope) {
+      var payload = {
+        'event': $scope.event,
+      };
+      // postData(payload);
+      console.log(payload);
     };
   }
-
 ]);

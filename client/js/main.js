@@ -23,7 +23,7 @@ app.config(function ($routeProvider) {
      .when('/events', {
       controller: 'EventsController',
       templateUrl: 'partials/events.html',
-      access: {restricted: false}
+      access: {restricted: true}
     })
     .when('/one', {
       template: '<h1>This is page one!</h1>',
@@ -39,6 +39,7 @@ app.config(function ($routeProvider) {
 app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (next.access.restricted && AuthService.isLoggedIn() === false) {
+
       $location.path('/login');
     }
   });

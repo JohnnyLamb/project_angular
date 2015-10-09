@@ -3,6 +3,28 @@ var router = express.Router();
 var passport = require('passport');
 var User = require('../models/users.js');
 
+router.get('/:username', function(req, res, next) {
+  User.findOne({username:req.params.username}, function(err, data){
+    if(err){
+      res.json({'message': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+router.post('/:username/event', function(req, res, next) {
+  var update = {
+    events:[req.body.event]
+  };
+  User.findOneAndUpdate({username:req.params.username},update, function(err, data){
+    if(err){
+      res.json({'message': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
 
 router.post('/register', function(req, res) {
   User.register(new User({
@@ -40,7 +62,8 @@ router.post('/login', function(req, res, next) {
         });
       }
       res.status(200).json({
-        status: 'Login successful!'
+        status: 'Login successful!',
+        user: user
       });
     });
   })(req, res, next);

@@ -38,7 +38,7 @@ app.factory('AuthService',
         .success(function (data, status) {
           if(status === 200 && data.status){
             user = true;
-            deferred.resolve();
+            deferred.resolve(data);
           } else {
             user = false;
             deferred.reject();
