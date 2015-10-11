@@ -36,6 +36,7 @@ app.factory('AuthService',
       $http.post('/user/login', {username: username, password: password})
         // handle success
         .success(function (data, status) {
+          console.log('just logged in')
           if(status === 200 && data.status){
             user = true;
             deferred.resolve(data);
@@ -64,6 +65,7 @@ app.factory('AuthService',
       $http.get('/user/logout')
         // handle success
         .success(function (data) {
+          console.log('just logged out')
           user = false;
           deferred.resolve();
         })
@@ -88,7 +90,9 @@ app.factory('AuthService',
         // handle success
         .success(function (data, status) {
           if(status === 200 && data.status){
-            deferred.resolve();
+            console.log('just registered')
+            // console.log(data)
+            deferred.resolve(data);
           } else {
             deferred.reject();
           }

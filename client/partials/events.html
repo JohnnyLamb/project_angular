@@ -1,5 +1,5 @@
 <div class="col-md-4">
-  <h1>Plan Your Night {{user}}</h2>
+  <h1>Plan your night {{user}}</h2>
   <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
   <form class="form">
     <div class="form-group">
@@ -16,6 +16,7 @@
       <div>
         <button ng-click='getYelp()' type="submit" class="btn btn-default" ng-disabled="disabled">Submit</button>
       </div>
+      <br>
       <table class="table table-striped">
       <thead>
         <tr>
@@ -37,7 +38,7 @@
 
         <td>{{event.review_count}}</td>
 
-        <td>{{event.phone}}</td>
+        <td>{{event.display_phone}}</td>
 
         <td><a target='_blank' ng-href='{{event.url}}'>{{event.url}}</td>
 
@@ -47,5 +48,33 @@
         </tr>
       </tbody>
     </table>
+
+     <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Rating</th>
+          <th>Reviews</th>
+          <th>Phone</th>
+          <th>Website</th>
+        </tr>
+      </thead>
+      <tbody id="added-events">
+       <tr ng-repeat='addedevent in addedEvents'>
+        <td>{{addedevent.name}}</td>
+
+       <!--  <td>{{event.location.display_address[0] +" "+ event.location.display_address[1]}}</td>
+
+        <td><img ng-src='{{event.rating_img_url}}'/></td>
+
+        <td>{{event.review_count}}</td>
+
+        <td>{{event.phone}}</td>
+
+        <td><a target='_blank' ng-href='{{event.url}}'>{{event.url}}</td>
+        </tr>
+      </tbody>
+    </table> -->
   </form>
 </div>

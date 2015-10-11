@@ -19,9 +19,11 @@ router.get('/events/:term/:location', function(req, res, next) {
     limit: 20,
     location: location
   }, function(error, data) {
-    if(error){
-      res.json({'message':error});
-    } else{
+    if (error) {
+      res.json({
+        'message': error
+      });
+    } else {
 
       res.json(data.businesses);
     }
@@ -30,9 +32,11 @@ router.get('/events/:term/:location', function(req, res, next) {
 
 // GET SINGLE EVENT
 router.get('/events/:id', function(req, res, next) {
-  User.findById(req.params.id, function(err, data){
-    if(err){
-      res.json({'message': err});
+  User.findById(req.params.id, function(err, data) {
+    if (err) {
+      res.json({
+        'message': err
+      });
     } else {
       res.json(data);
     }
@@ -40,19 +44,26 @@ router.get('/events/:id', function(req, res, next) {
 });
 
 router.post('/addEvent', function(req, res, next) {
-  User.findById(req.session.user._id, function (err, user) {
-    if(!err){
-      user.events.push(req.body);
-      user.save(function(err,data){
-         if(err){
-           res.json({'message':err});
-         } else{
-           res.json(data);
-         }
-       });
-     }
-  });
+  User.findById(req.session.user._id, function(err, user) {
+    if (!err) {
+      if (Object.is()) {
+        console.log('hit');
+        // console.log(user.events[0].name);
+        user.events.push(req.body);
+        user.save(function(err, data) {
+          if (err) {
+            res.json({
+              'message': err
+            });
+          } else {
+            // console.log(data);
+            res.json(data);
+          }
+        });
+      }
 
+    }
+  });
 });
 
 

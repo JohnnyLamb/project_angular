@@ -13,9 +13,9 @@ app.controller('loginController', ['$rootScope', '$scope', '$location', 'AuthSer
         .then(function(data) {
           $location.path('/events');
           $scope.disabled = false;
-          console.log(data);
+          // console.log(data);
           $rootScope.user = data.user.username;
-          console.log($rootScope);
+          // console.log($rootScope);
           $scope.loginForm = {};
 
         })
@@ -48,10 +48,10 @@ app.controller('logoutController', ['$scope', '$location', 'AuthService',
   }
 ]);
 
-app.controller('registerController', ['$scope', '$location', 'AuthService',
-  function($scope, $location, AuthService) {
+app.controller('registerController', ['$rootScope', '$scope', '$location', 'AuthService',
+  function($rootScope, $scope, $location, AuthService) {
 
-    console.log(AuthService.getUserStatus());
+    // console.log(AuthService.getUserStatus());
 
     $scope.register = function() {
 
@@ -62,9 +62,11 @@ app.controller('registerController', ['$scope', '$location', 'AuthService',
       // call register from service
       AuthService.register($scope.registerForm.username, $scope.registerForm.password)
         // handle success
-        .then(function() {
+        .then(function(data) {
+          // console.log(data.user)
           $location.path('/events');
           $scope.disabled = false;
+          $rootScope.user = data.user;
           $scope.registerForm = {};
         })
         // handle error
@@ -96,8 +98,12 @@ app.controller('EventsController', ['$scope',
       $scope.term = undefined;
     };
     $scope.addEvent = function(data) {
+      $scope.addedEvents = [];
       $http.post('/yelp/user/addEvent', data).then(function(data) {
         //fix our scope to change the addedEvent so we can't add it more times.
+        console.log(data.data.events);
+        console.log(data.data.events.name);
+        $scope.addedEvents.push(data.data.events[0].name);
 
       });
 
