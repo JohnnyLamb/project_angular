@@ -30,9 +30,10 @@ router.get('/events/:term/:location', function(req, res, next) {
   });
 });
 
-// GET SINGLE EVENT
-router.get('/events/:id', function(req, res, next) {
-  User.findById(req.params.id, function(err, data) {
+// GET USER EVENT
+router.get('/events/', function(req, res, next) {
+  console.log('hit');
+  User.findById(req.session.user._id, function(err, data) {
     if (err) {
       res.json({
         'message': err
@@ -46,22 +47,27 @@ router.get('/events/:id', function(req, res, next) {
 router.post('/addEvent', function(req, res, next) {
   User.findById(req.session.user._id, function(err, user) {
     if (!err) {
-      if (Object.is()) {
-        console.log('hit');
-        // console.log(user.events[0].name);
-        user.events.push(req.body);
-        user.save(function(err, data) {
-          if (err) {
-            res.json({
-              'message': err
-            });
-          } else {
-            // console.log(data);
-            res.json(data);
-          }
-        });
+      console.log('hit');
+      // to check and see if something is in the db, if not, push
+      var counter = 0;
+      for (var i = 0; i < user.events.length; i++) {
+        if (user.events[i].name.indexOf(req.body.name) !== -1) {
+          counter++;
+        }
       }
-
+      if(counter === 0){
+          user.events.push(req.body);
+        }
+         // end logic on db
+      user.save(function(err, data) {
+        if (err) {
+          res.json({
+            'message': err
+          });
+        } else {
+          res.json(data);
+        }
+      });
     }
   });
 });

@@ -97,17 +97,20 @@ app.controller('EventsController', ['$scope',
       $scope.city = undefined;
       $scope.term = undefined;
     };
+    $http.get('yelp/user/events/').then(function(data) {
+      $scope.addedEvents = data.data.events;
+    });
     $scope.addEvent = function(data) {
-      $scope.addedEvents = [];
+
       $http.post('/yelp/user/addEvent', data).then(function(data) {
         //fix our scope to change the addedEvent so we can't add it more times.
-        console.log(data.data.events);
-        console.log(data.data.events.name);
-        $scope.addedEvents.push(data.data.events[0].name);
+        console.log(data.data);
+        $scope.addedEvents = data.data.events;
 
       });
-
-
     };
+    $scope.sortType = 'name'; // set the default sort type
+    $scope.sortReverse = false; // set the default sort order
+
   }
 ]);
