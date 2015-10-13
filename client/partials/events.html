@@ -21,15 +21,37 @@
     <div><h1>Destinations for tonight</h1></div>
      <table class="table table-striped">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Rating</th>
-          <th>Reviews</th>
-          <th>Phone</th>
-          <th>Website</th>
-        </tr>
-      </thead>
+      <tr>
+        <td>
+          <a href="#/events" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Name
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#/events" ng-click="sortType = 'location.display_address[0]'; sortReverse = !sortReverse">
+          Address
+            <span ng-show="sortType == 'location.display_address[0]' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'location.display_address[0]' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#/events" ng-click="sortType = 'rating_img_url'; sortReverse = !sortReverse">
+          Rating
+            <span ng-show="sortType == 'rating_img_url' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'rating_img_url' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#/events" ng-click="sortType = 'review_count'; sortReverse = !sortReverse">
+          # of Reviews
+            <span ng-show="sortType == 'rating_img_url' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'rating_img_url' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+      </tr>
+    </thead>
       <tbody id="added-events">
        <tr ng-repeat='addedevent in addedEvents | orderBy:sortType:sortReverse'>
         <td>{{addedevent.name}}</td>
@@ -43,23 +65,48 @@
         <td>{{addedevent.phone}}</td>
 
         <td><a target='_blank' ng-href='{{addedevent.url}}'>{{addedevent.url}}</td>
+        <td class='text-right'>
+          <button ng-click="deleteEvent(addedevent._id)" class='btn btn-primary'><span class='glyphicon glyphicon-minus'>Remove</span></button>
+            </td>
         </tr>
       </tbody>
     </table>
     <div><h1>Search Results</h1></div>
       <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Rating</th>
-          <th>Reviews</th>
-          <th>Phone</th>
-          <th>Website</th>
-        </tr>
-      </thead>
+        <thead>
+      <tr>
+        <td>
+          <a href="#/events" ng-click="sortType2 = 'name'; sortReverse2 = !sortReverse2">
+            Name
+            <span ng-show="sortType2 == 'name' && !sortReverse2" class="fa fa-caret-down"></span>
+            <span ng-show="sortType2 == 'name' && sortReverse2" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#/events" ng-click="sortType2 = 'location.display_address[0]'; sortReverse2 = !sortReverse2">
+          Address
+            <span ng-show="sortType2 == 'location.display_address[0]' && !sortReverse2" class="fa fa-caret-down"></span>
+            <span ng-show="sortType2 == 'location.display_address[0]' && sortReverse2" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#/events" ng-click="sortType2 = 'rating_img_url'; sortReverse2 = !sortReverse2">
+          Rating
+            <span ng-show="sortType2 == 'rating_img_url' && !sortReverse2" class="fa fa-caret-down"></span>
+            <span ng-show="sortType2 == 'rating_img_url' && sortReverse2" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#/events" ng-click="sortType2 = 'review_count'; sortReverse2 = !sortReverse2">
+          # of Reviews
+            <span ng-show="sortType2 == 'rating_img_url' && !sortReverse2" class="fa fa-caret-down"></span>
+            <span ng-show="sortType2 == 'rating_img_url' && sortReverse2" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+      </tr>
+    </thead>
       <tbody id="all-events">
-       <tr ng-repeat='event in events'>
+       <tr ng-repeat='event in events | orderBy:sortType2:sortReverse2'>
         <td>{{event.name}}</td>
 
         <td>{{event.location.display_address[0] +" "+ event.location.display_address[1]}}</td>
@@ -73,7 +120,7 @@
         <td><a target='_blank' ng-href='{{event.url}}'>{{event.url}}</td>
 
         <td class='text-right'>
-          <button ng-model='event'ng-click="addEvent(event)" class='btn btn-primary'><span class='glyphicon glyphicon-plus'>Add</span></button>
+          <button ng-click="addEvent(event)" class='btn btn-primary'><span class='glyphicon glyphicon-plus'>Add</span></button>
             </td>
         </tr>
       </tbody>

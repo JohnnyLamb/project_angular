@@ -1,12 +1,9 @@
 app.controller('loginController', ['$rootScope', '$scope', '$location', 'AuthService',
   function($rootScope, $scope, $location, AuthService) {
-
     $scope.login = function() {
-
       // initial values
       $scope.error = false;
       $scope.disabled = true;
-
       // call login from service
       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
         // handle success
@@ -17,7 +14,6 @@ app.controller('loginController', ['$rootScope', '$scope', '$location', 'AuthSer
           $rootScope.user = data.user.username;
           // console.log($rootScope);
           $scope.loginForm = {};
-
         })
         // handle error
         .catch(function() {
@@ -26,19 +22,14 @@ app.controller('loginController', ['$rootScope', '$scope', '$location', 'AuthSer
           $scope.disabled = false;
           $scope.loginForm = {};
         });
-
     };
-
   }
 ]);
 
 app.controller('logoutController', ['$scope', '$location', 'AuthService',
   function($scope, $location, AuthService) {
-
     $scope.logout = function() {
-
       console.log(AuthService.getUserStatus());
-
       // call logout from service
       AuthService.logout()
         .then(function() {
@@ -50,15 +41,11 @@ app.controller('logoutController', ['$scope', '$location', 'AuthService',
 
 app.controller('registerController', ['$rootScope', '$scope', '$location', 'AuthService',
   function($rootScope, $scope, $location, AuthService) {
-
     // console.log(AuthService.getUserStatus());
-
     $scope.register = function() {
-
       // initial values
       $scope.error = false;
       $scope.disabled = true;
-
       // call register from service
       AuthService.register($scope.registerForm.username, $scope.registerForm.password)
         // handle success
@@ -97,20 +84,30 @@ app.controller('EventsController', ['$scope',
       $scope.city = undefined;
       $scope.term = undefined;
     };
+    // get users events
     $http.get('yelp/user/events/').then(function(data) {
+      // console.log(data.data.events[0]);
       $scope.addedEvents = data.data.events;
     });
+    // add one event to a single user
     $scope.addEvent = function(data) {
-
+      console.log(data);
       $http.post('/yelp/user/addEvent', data).then(function(data) {
-        //fix our scope to change the addedEvent so we can't add it more times.
-        console.log(data.data);
+        console.log(data);
         $scope.addedEvents = data.data.events;
-
       });
     };
-    $scope.sortType = 'name'; // set the default sort type
-    $scope.sortReverse = false; // set the default sort order
-
+    $scope.deleteEvent = function(data) {
+      console.log(data);
+      $http.delete('/yelp/user/delete/' + data).then(function(data) {
+        // console.log(data);
+        // $scope.addedEvents = data.data.events;
+      });
+    };
+    // SORTING THE TABLES
+    $scope.sortType = 'name';
+    $scope.sortType2 = 'name';
+    $scope.sortReverse = false;
+    $scope.sortReverse2 = false; // set the default sort order
   }
 ]);
